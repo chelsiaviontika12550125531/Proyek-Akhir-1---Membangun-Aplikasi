@@ -1,39 +1,66 @@
 class LibraryService:
+
     def __init__(self):
         self.__items = []
+        self.__members = []
 
-    # Tambah item
+    # ITEM
+
     def add_item(self, item):
         self.__items.append(item)
-        print("Item berhasil ditambahkan!")
 
-    # Hapus item
     def remove_item(self, item_id):
+
         for item in self.__items:
             if item.get_item_id() == item_id:
                 self.__items.remove(item)
-                print("Item berhasil dihapus!")
                 return
 
-        print("Item tidak ditemukan!")
+        print("Item tidak ditemukan")
 
-    # Update judul
-    def update_item_title(self, item_id, new_title):
+    def update_title(self, item_id, new_title):
+
         for item in self.__items:
+
             if item.get_item_id() == item_id:
                 item.set_title(new_title)
-                print("Judul berhasil diupdate!")
                 return
 
-        print("Item tidak ditemukan!")
+    def show_items(self):
 
-    # Tampilkan semua item
-    def show_all_items(self):
-        if len(self.__items) == 0:
-            print("Data kosong!")
-        else:
-            for item in self.__items:
-                item.display_info()
+        if not self.__items:
+            print("Belum ada koleksi")
+            return
+
+        for item in self.__items:
+            item.display_info()
 
     def get_items(self):
         return self.__items
+
+    # MEMBER
+
+    def add_member(self, member):
+        self.__members.append(member)
+
+    def remove_member(self, member_id):
+
+        for member in self.__members:
+
+            if member.get_member_id() == member_id:
+                self.__members.remove(member)
+                return
+
+        print("Member tidak ditemukan")
+
+    def show_members(self):
+
+        if not self.__members:
+            print("Belum ada member")
+            return
+
+        for member in self.__members:
+            member.display_member()
+
+    def get_members(self):
+        return self.__members
