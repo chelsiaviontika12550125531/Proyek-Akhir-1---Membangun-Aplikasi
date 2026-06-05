@@ -1,78 +1,118 @@
 from models.book import Book
 from models.magazine import Magazine
+from models.member import Member
+
 from services.library_service import LibraryService
 from services.report_service import ReportService
+
 from utils.helper import garis
 
 
-def main():
-    library = LibraryService()
+library = LibraryService()
 
-    while True:
-        garis()
-        print(" SISTEM PERPUSTAKAAN PROFESIONAL ")
-        garis()
+while True:
 
-        print("""
+    garis()
+
+    print("SISTEM PERPUSTAKAAN PROFESIONAL")
+
+    garis()
+
+    print("""
 1. Tambah Buku
 2. Tambah Majalah
-3. Tampilkan Semua Koleksi
-4. Update Judul Item
-5. Hapus Item
-6. Laporan Total Koleksi
-7. Keluar
+3. Tambah Member
+4. Tampilkan Koleksi
+5. Tampilkan Member
+6. Update Judul Item
+7. Hapus Item
+8. Hapus Member
+9. Laporan
+10. Keluar
 """)
 
-        pilihan = input("Pilih menu: ")
+    pilihan = input("Pilih Menu : ")
 
-        # Tambah Buku
-        if pilihan == "1":
-            item_id = input("ID Buku      : ")
-            title = input("Judul Buku   : ")
-            author = input("Penulis      : ")
-            stock = int(input("Stok Buku    : "))
+    if pilihan == "1":
 
-            book = Book(item_id, title, author, stock)
-            library.add_item(book)
+        item_id = input("ID Buku : ")
+        title = input("Judul : ")
+        author = input("Penulis : ")
+        stock = int(input("Stok : "))
 
-        # Tambah Majalah
-        elif pilihan == "2":
-            item_id = input("ID Majalah   : ")
-            title = input("Judul        : ")
-            publisher = input("Penerbit     : ")
-            edition = input("Edisi        : ")
+        book = Book(item_id, title, author, stock)
 
-            magazine = Magazine(item_id, title, publisher, edition)
-            library.add_item(magazine)
+        library.add_item(book)
 
-        # Tampilkan Semua
-        elif pilihan == "3":
-            library.show_all_items()
+    elif pilihan == "2":
 
-        # Update Judul
-        elif pilihan == "4":
-            item_id = input("Masukkan ID item: ")
-            new_title = input("Judul baru: ")
+        item_id = input("ID Majalah : ")
+        title = input("Judul : ")
+        publisher = input("Penerbit : ")
+        edition = input("Edisi : ")
 
-            library.update_item_title(item_id, new_title)
+        magazine = Magazine(
+            item_id,
+            title,
+            publisher,
+            edition
+        )
 
-        # Hapus Item
-        elif pilihan == "5":
-            item_id = input("Masukkan ID item yang ingin dihapus: ")
-            library.remove_item(item_id)
+        library.add_item(magazine)
 
-        # Laporan
-        elif pilihan == "6":
-            ReportService.total_items(library.get_items())
+    elif pilihan == "3":
 
-        # Keluar
-        elif pilihan == "7":
-            print("Program selesai...")
-            break
+        member_id = input("ID Member : ")
+        nama = input("Nama : ")
 
-        else:
-            print("Pilihan tidak valid!")
+        member = Member(member_id, nama)
 
+        library.add_member(member)
 
-if __name__ == "__main__":
-    main()
+    elif pilihan == "4":
+
+        library.show_items()
+
+    elif pilihan == "5":
+
+        library.show_members()
+
+    elif pilihan == "6":
+
+        item_id = input("ID Item : ")
+        title = input("Judul Baru : ")
+
+        library.update_title(item_id, title)
+
+    elif pilihan == "7":
+
+        item_id = input("ID Item : ")
+
+        library.remove_item(item_id)
+
+    elif pilihan == "8":
+
+        member_id = input("ID Member : ")
+
+        library.remove_member(member_id)
+
+    elif pilihan == "9":
+
+        print("\n=== LAPORAN ===")
+
+        ReportService.total_items(
+            library.get_items()
+        )
+
+        ReportService.total_members(
+            library.get_members()
+        )
+
+    elif pilihan == "10":
+
+        print("Program selesai")
+        break
+
+    else:
+
+        print("Menu tidak tersedia")
